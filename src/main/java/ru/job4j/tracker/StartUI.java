@@ -7,6 +7,12 @@ public class StartUI {
     public static void main(String[] args) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMMM-EEEE-yyyy HH:mm:ss");
         LocalDateTime date = new Item().getCreated();
+
         System.out.println(date.format(formatter));
+
+        Tracker tracker = new Tracker();
+        Item item1 = new Item();
+        tracker.add(item1);
+        System.out.println(tracker.findById(1));
     }
 }
