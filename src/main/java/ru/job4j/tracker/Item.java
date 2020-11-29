@@ -41,7 +41,7 @@ public class Item {
 
     @Override
     public String toString() {
-        return "Объект Item: id=" +  this.id + " " + "name=" + this.getName();
+        return "Item{" + "id=" + id + ", name='" + name + '\'' + ", created=" + created + '}';
     }
 
     @Override

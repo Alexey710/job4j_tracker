@@ -12,7 +12,9 @@ public class StartUI {
 
         Tracker tracker = new Tracker();
         Item item1 = new Item();
+        item1.setName("new title");
         tracker.add(item1);
         System.out.println(tracker.findById(1));
+
     }
 }
