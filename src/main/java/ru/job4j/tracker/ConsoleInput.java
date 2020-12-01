@@ -16,3 +16,4 @@ public class ConsoleInput implements Input {
         return Integer.valueOf(askStr(question));
     }
 }
+
