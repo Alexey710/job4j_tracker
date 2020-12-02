@@ -18,7 +18,7 @@ public class FindItemsByName implements UserAction {
         Item[] all = tracker.findByName(name);
         if (all.length > 0) {
             for (Item elem : all) {
-                System.out.println(elem);
+                out.println(elem);
             }
         } else {
             System.out.println("Name is not found.");

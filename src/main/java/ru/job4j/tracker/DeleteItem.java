@@ -17,9 +17,9 @@ public class DeleteItem implements UserAction {
         int id = input.askInt("Select \"id\":");
         boolean validation = tracker.delete(id);
         if (validation) {
-            System.out.println("Item is deleted.");
+            out.println("Item is deleted.");
         } else {
-            System.out.println("Item is not deleted.");
+            out.println("Item is not deleted.");
         }
         return true;
     }
