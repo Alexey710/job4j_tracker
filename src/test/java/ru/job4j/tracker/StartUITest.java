@@ -7,59 +7,48 @@ import static org.junit.Assert.assertThat;
 
 public class StartUITest {
     @Test
-    public void createItem() {
-        String[] answers = {"Item1", "Item2", "Item3"};
+    public void whenCreateItem() {
+        String[] answers = {"0", "Item1", "6"};
         Input input = new StubInput(answers);
         Tracker tracker = new Tracker();
-        for (int i = 0; i < 3; i++) {
-            StartUI.createItem(input, tracker);
-        }
-        Item created = tracker.findAll()[2];
-        Item expected = new Item("Item3");
+        UserAction[] actions = {
+                new CreateItem(), new ShowAllItems(), new EditItem(),
+                new DeleteItem(), new FindItemById(), new FindItemsByName(), new ExitProgram()
+        };
+        new StartUI().init(input, tracker, actions);
+        Item created = tracker.findAll()[0];
+        Item expected = new Item("Item1");
         assertThat(created.getName(), is(expected.getName()));
     }
 
     @Test
-    public void whenReplaceItem() {
+    public void whenEditItem0() {
+        String[] answers = {"0", "Item1", "0", "Item2", "2", "1", "replaced Item1", "6"};
+        Input input = new StubInput(answers);
         Tracker tracker = new Tracker();
-        Item item = new Item("new item");
-        Item item2 = new Item("new item2");
-        tracker.add(item);
-        tracker.add(item2);
-        String[] answers = {
-                Integer.toString(item.getId()), "replaced item", Integer.toString(item2.getId()), "replaced item2"
+        UserAction[] actions = {
+                new CreateItem(), new ShowAllItems(), new EditItem(),
+                new DeleteItem(), new FindItemById(), new FindItemsByName(), new ExitProgram()
         };
-        StubInput stubInput = new StubInput(answers);
-        StartUI.editItem(stubInput, tracker);
-        StartUI.editItem(stubInput, tracker);
-
-        Item replaced = tracker.findById(item.getId());
-        assertThat(replaced.getName(), is("replaced item"));
-        Item replaced1 = tracker.findById(item2.getId());
-        assertThat(replaced1.getName(), is("replaced item2"));
+        new StartUI().init(input, tracker, actions);
+        Item created = tracker.findAll()[0];
+        Item expected = new Item("replaced Item1");
+        assertThat(created.getName(), is(expected.getName()));
     }
 
     @Test
-    public void deleteItem() {
+    public void whenDeleteItem() {
+        String[] answers = {"0", "Item1", "0", "Item2", "3", "1", "6"};
+        Input input = new StubInput(answers);
         Tracker tracker = new Tracker();
-
-        Item item = new Item("new item");
-        Item item2 = new Item("new item2");
-
-        tracker.add(item);
-        tracker.add(item2);
-
-        String[] answers = {
-                Integer.toString(item.getId())};
-
-        StubInput stubInput = new StubInput(answers);
-
-        Item before = tracker.findAll()[0];
-        assertThat(before.getName(), is("new item"));
-
-        StartUI.deleteItem(stubInput, tracker);
-
-        Item after = tracker.findAll()[0];
-        assertThat(after.getName(), is("new item2"));
+        UserAction[] actions = {
+                new CreateItem(), new ShowAllItems(), new EditItem(),
+                new DeleteItem(), new FindItemById(), new FindItemsByName(), new ExitProgram()
+        };
+        new StartUI().init(input, tracker, actions);
+        Item created = tracker.findAll()[0];
+        Item expected = new Item("Item2");
+        assertThat(created.getName(), is(expected.getName()));
     }
+
 }
