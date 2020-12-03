@@ -16,7 +16,7 @@ public class StartUITest {
                 new DeleteItem(output), new FindItemById(output), new FindItemsByName(output), new ExitProgram(output)
         };
         new StartUI(output).init(in, tracker, actions);
-        assertThat(output.toString(), is("===Exit Program===\r\n"));
+        assertThat(output.toString(), is("===Exit Program===" + System.lineSeparator()));
     }
 
     @Test
@@ -32,9 +32,10 @@ public class StartUITest {
         };
         new StartUI(output).init(in, tracker, actions);
         assertThat(output.toString(), is(
-                "Item{id=1, name='Item1}\r\n"
-                        + "Item{id=2, name='Item2}\r\n"
-                        + "Item{id=3, name='Item3}\r\n===Exit Program===\r\n"));
+                "Item{id=1, name='Item1}" + System.lineSeparator()
+                        + "Item{id=2, name='Item2}" + System.lineSeparator()
+                        + "Item{id=3, name='Item3}" + System.lineSeparator() + "===Exit Program==="
+                        + System.lineSeparator()));
     }
 
     @Test
@@ -49,7 +50,8 @@ public class StartUITest {
                 new DeleteItem(output), new FindItemById(output), new FindItemsByName(output), new ExitProgram(output)
         };
         new StartUI(output).init(in, tracker, actions);
-        assertThat(output.toString(), is("Item{id=1, name='Item1}\r\n===Exit Program===\r\n"));
+        assertThat(output.toString(), is("Item{id=1, name='Item1}" + System.lineSeparator()
+                + "===Exit Program===" + System.lineSeparator()));
     }
 
     @Test
@@ -64,7 +66,8 @@ public class StartUITest {
                 new DeleteItem(output), new FindItemById(output), new FindItemsByName(output), new ExitProgram(output)
         };
         new StartUI(output).init(in, tracker, actions);
-        assertThat(output.toString(), is("Item{id=2, name='Item2}\r\n===Exit Program===\r\n"));
+        assertThat(output.toString(), is("Item{id=2, name='Item2}" + System.lineSeparator()
+                + "===Exit Program===" + System.lineSeparator() ));
     }
 
     @Test
@@ -79,7 +82,8 @@ public class StartUITest {
                 new DeleteItem(output), new FindItemById(output), new FindItemsByName(output), new ExitProgram(output)
         };
         new StartUI(output).init(in, tracker, actions);
-        assertThat(output.toString(), is("Item is deleted.\r\n===Exit Program===\r\n"));
+        assertThat(output.toString(), is("Item is deleted." + System.lineSeparator()
+                + "===Exit Program===" + System.lineSeparator() ));
     }
 
 }
