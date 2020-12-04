@@ -1,18 +1,25 @@
 package ru.job4j.tracker;
 
 public class StartUI {
+    private static UserAction[] actions;
     private final Output out;
-
-    public StartUI(Output out) {
+    
+    public StartUI(Output out, UserAction[] actions) {
         this.out = out;
+        StartUI.actions = actions;
+
     }
 
-    public void init(Input input, Tracker tracker, UserAction[] actions) {
+    public static UserAction[] getActions() {
+        return actions;
+    }
+
+    public void init(Input input, Tracker tracker) {
         boolean run = true;
         while (run) {
-            this.showMenu(actions);
+            this.showMenu(StartUI.actions);
             int select = input.askInt("Select: ");
-            UserAction action = actions[select];
+            UserAction action = StartUI.actions[select];
             run = action.execute(input, tracker);
         }
     }
@@ -32,7 +39,7 @@ public class StartUI {
                 new CreateItem(output), new ShowAllItems(output), new EditItem(output),
                 new DeleteItem(output), new FindItemById(output), new FindItemsByName(output), new ExitProgram(output)
         };
-        new StartUI(output).init(input, tracker, actions);
+        new StartUI(output, actions).init(input, tracker);
     }
 }
 

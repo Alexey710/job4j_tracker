@@ -3,7 +3,6 @@ package ru.job4j.tracker;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 public class StartUITest {
@@ -16,7 +15,7 @@ public class StartUITest {
                 new CreateItem(output), new ShowAllItems(output), new EditItem(output),
                 new DeleteItem(output), new FindItemById(output), new FindItemsByName(output), new ExitProgram(output)
         };
-        new StartUI(output).init(in, tracker, actions);
+        new StartUI(output, actions).init(in, tracker);
         assertThat(output.toString(), is("===Exit Program===" + System.lineSeparator()));
     }
 
@@ -31,7 +30,7 @@ public class StartUITest {
                 new CreateItem(output), new ShowAllItems(output), new EditItem(output),
                 new DeleteItem(output), new FindItemById(output), new FindItemsByName(output), new ExitProgram(output)
         };
-        new StartUI(output).init(in, tracker, actions);
+        new StartUI(output, actions).init(in, tracker);
         assertThat(output.toString(), is(
                 "Item{id=1, name='Item1}" + System.lineSeparator()
                         + "Item{id=2, name='Item2}" + System.lineSeparator()
@@ -50,7 +49,7 @@ public class StartUITest {
                 new CreateItem(output), new ShowAllItems(output), new EditItem(output),
                 new DeleteItem(output), new FindItemById(output), new FindItemsByName(output), new ExitProgram(output)
         };
-        new StartUI(output).init(in, tracker, actions);
+        new StartUI(output, actions).init(in, tracker);
         assertThat(output.toString(), is("Item{id=1, name='Item1}" + System.lineSeparator()
                 + "===Exit Program===" + System.lineSeparator()));
     }
@@ -66,7 +65,7 @@ public class StartUITest {
                 new CreateItem(output), new ShowAllItems(output), new EditItem(output),
                 new DeleteItem(output), new FindItemById(output), new FindItemsByName(output), new ExitProgram(output)
         };
-        new StartUI(output).init(in, tracker, actions);
+        new StartUI(output, actions).init(in, tracker);
         assertThat(output.toString(), is("Item{id=2, name='Item2}" + System.lineSeparator()
                 + "===Exit Program===" + System.lineSeparator() ));
     }
@@ -82,7 +81,7 @@ public class StartUITest {
                 new CreateItem(output), new ShowAllItems(output), new EditItem(output),
                 new DeleteItem(output), new FindItemById(output), new FindItemsByName(output), new ExitProgram(output)
         };
-        new StartUI(output).init(in, tracker, actions);
+        new StartUI(output, actions).init(in, tracker);
         assertThat(output.toString(), is("Item is deleted." + System.lineSeparator()
                 + "===Exit Program===" + System.lineSeparator() ));
     }
@@ -97,10 +96,10 @@ public class StartUITest {
                 new CreateItem(output), new ShowAllItems(output), new EditItem(output),
                 new DeleteItem(output), new FindItemById(output), new FindItemsByName(output), new ExitProgram(output)
         };
-        new StartUI(output).init(input, tracker, actions);
+        new StartUI(output, actions).init(input, tracker);
         assertThat(output.toString(), is(
                 String.format(
-                        "Please enter number of menu from 0 to 6." + System.lineSeparator()
+                        "Please enter number of menu from 0 to 6" + System.lineSeparator()
                                 + "===Exit Program===" + System.lineSeparator()
                 )
         ));
@@ -108,33 +107,48 @@ public class StartUITest {
 
     @Test
     public void whenValidInput() {
-        Output out = new StubOutput();
+        Output output = new StubOutput();
+        UserAction[] actions = {
+                new CreateItem(output), new ShowAllItems(output), new EditItem(output),
+                new DeleteItem(output), new FindItemById(output), new FindItemsByName(output), new ExitProgram(output)
+        };
+        StartUI startUI = new StartUI(output, actions);
         Input in = new StubInput(
                 new String[] { "1"}
         );
-        ValidateInput input = new ValidateInput(out, in);
-        int selected = input.askInt("Enter menu:");
+        ValidateInput valid = new ValidateInput(output, in);
+        int selected = valid.askInt("Enter menu:");
         assertThat(selected, is(1));
     }
 
     @Test
     public void whenMultipleValidInput() {
-        Output out = new StubOutput();
+        Output output = new StubOutput();
+        UserAction[] actions = {
+                new CreateItem(output), new ShowAllItems(output), new EditItem(output),
+                new DeleteItem(output), new FindItemById(output), new FindItemsByName(output), new ExitProgram(output)
+        };
+        StartUI startUI = new StartUI(output, actions);
         Input in = new StubInput(
                 new String[] { "0", "Entry1", "0", "Entry2", "0", "Entry3"}
         );
-        ValidateInput input = new ValidateInput(out, in);
+        ValidateInput input = new ValidateInput(output, in);
         int selected = input.askInt("Enter menu:");
         assertThat(selected, is(0));
     }
 
     @Test
     public void whenNegativeInvalidInput() {
-        Output out = new StubOutput();
+        Output output = new StubOutput();
+        UserAction[] actions = {
+                new CreateItem(output), new ShowAllItems(output), new EditItem(output),
+                new DeleteItem(output), new FindItemById(output), new FindItemsByName(output), new ExitProgram(output)
+        };
+        StartUI startUI = new StartUI(output, actions);
         Input in = new StubInput(
                 new String[] { "-1", "0"}
         );
-        ValidateInput input = new ValidateInput(out, in);
+        ValidateInput input = new ValidateInput(output, in);
         int selected = input.askInt("Enter menu:");
         assertThat(selected, is(0));
     }
