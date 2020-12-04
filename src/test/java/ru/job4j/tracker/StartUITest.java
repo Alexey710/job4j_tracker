@@ -88,15 +88,15 @@ public class StartUITest {
 
     @Test
     public void whenInvalidExit() {
-        Output output = new StubOutput();
         String[] answers = {"9", "6"};
-        Input in = new ValidateStubInput(answers, output);
+        Output output = new StubOutput();
+        Input input = new ValidateInput(output, new StubInput(answers));
         Tracker tracker = new Tracker();
         UserAction[] actions = {
                 new CreateItem(output), new ShowAllItems(output), new EditItem(output),
                 new DeleteItem(output), new FindItemById(output), new FindItemsByName(output), new ExitProgram(output)
         };
-        new StartUI(output).init(in, tracker, actions);
+        new StartUI(output).init(input, tracker, actions);
         assertThat(output.toString(), is(
                 String.format(
                         "Please enter number of menu from 0 to 6." + System.lineSeparator()
