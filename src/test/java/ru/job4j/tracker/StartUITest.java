@@ -86,4 +86,22 @@ public class StartUITest {
                 + "===Exit Program===" + System.lineSeparator() ));
     }
 
+    @Test
+    public void whenInvalidExit() {
+        Output output = new StubOutput();
+        String[] answers = {"9", "6"};
+        Input in = new ValidateStubInput(answers, output);
+        Tracker tracker = new Tracker();
+        UserAction[] actions = {
+                new CreateItem(output), new ShowAllItems(output), new EditItem(output),
+                new DeleteItem(output), new FindItemById(output), new FindItemsByName(output), new ExitProgram(output)
+        };
+        new StartUI(output).init(in, tracker, actions);
+        assertThat(output.toString(), is(
+                String.format(
+                        "Please enter number of menu from 0 to 6." + System.lineSeparator()
+                                + "===Exit Program===" + System.lineSeparator()
+                )
+        ));
+    }
 }
