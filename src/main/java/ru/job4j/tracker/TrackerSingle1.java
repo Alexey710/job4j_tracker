@@ -67,4 +67,13 @@ public enum TrackerSingle1 {
         }
         return rsl;
     }
+
+    public static void main(String[] args) {
+        Item item1 = new Item("Entry100");
+        Item item2 = new Item("Entry200");
+        TrackerSingle1.INSTANCE.add(item1);
+        TrackerSingle1.INSTANCE.add(item2);
+        System.out.println(Arrays.toString(INSTANCE.findAll()));
+        System.out.println(Arrays.toString(INSTANCE.items));
+    }
 }

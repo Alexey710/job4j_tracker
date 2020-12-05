@@ -3,79 +3,51 @@ package ru.job4j.tracker;
 import java.util.Arrays;
 
 public class TrackerSingle2 {
-    private static TrackerSingle2 instance;
-    private final Item[] items = new Item[100];
-    private int ids = 1;
-    private int size = 0;
+    private static Tracker instance;
 
     private TrackerSingle2() {
     }
 
-    public static TrackerSingle2 getInstance() {
+    public static Tracker getInstance() {
         if (instance == null) {
-            instance = new TrackerSingle2();
+            instance = new Tracker();
         }
         return instance;
     }
 
     public Item add(Item item) {
-        item.setId(ids++);
-        items[size++] = item;
-        return item;
-    }
-
-    private int indexOf(int id) {
-        int rsl = -1;
-        for (int index = 0; index < size; index++) {
-            if (items[index].getId() == id) {
-                rsl = index;
-                break;
-            }
-        }
-        return rsl;
+        return instance.add(item);
     }
 
     public Item findById(int id) {
-        int index = indexOf(id);
-        return index != -1 ? items[index] : null;
+        return instance.findById(id);
     }
 
     public Item[] findByName(String key) {
-        Item[] namesEqualsKey = new Item[size];
-        int index = 0;
-        for (int i = 0; i < namesEqualsKey.length; i++) {
-            if (items[i] != null && items[i].getName().equals(key)) {
-                namesEqualsKey[index] = items[i];
-                index++;
-            }
-        }
-        namesEqualsKey = Arrays.copyOf(namesEqualsKey, index);
-        return namesEqualsKey;
+        return instance.findByName(key);
     }
 
     public Item[] findAll() {
-        return Arrays.copyOf(items, size);
+        return instance.findAll();
     }
 
     public boolean replace(int id, Item item) {
-        int index = indexOf(id);
-        boolean rsl = index != -1;
-        if (rsl) {
-            items[index] = item;
-            items[index].setId(id);
-        }
-        return rsl;
+        return instance.replace(id, item);
     }
 
     public boolean delete(int id) {
-        int index = indexOf(id);
-        boolean rsl = index != -1;
-        if (rsl) {
-            System.arraycopy(items, index + 1, items, index, items.length - index - 1);
-            items[size - 1] = null;
-            size--;
-        }
-        return rsl;
+        return instance.delete(id);
     }
 
+    public static void main(String[] args) {
+        Tracker instance1 = TrackerSingle2.getInstance();
+        Tracker instance2 = TrackerSingle2.getInstance();
+        Item item1 = new Item("Entry100");
+        Item item2 = new Item("Entry200");
+        instance1.add(item1);
+        instance2.add(item2);
+        System.out.println(Arrays.toString(instance1.findAll()));
+        System.out.println(Arrays.toString(instance2.findAll()));
+        System.out.println(instance1 == instance2);
+    }
 }
