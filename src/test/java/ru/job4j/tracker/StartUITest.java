@@ -88,14 +88,15 @@ public class StartUITest {
 
     @Test
     public void whenInvalidExit() {
-        String[] answers = {"9", "6"};
         Output output = new StubOutput();
-        Input input = new ValidateInput(output, new StubInput(answers));
-        Tracker tracker = new Tracker();
         UserAction[] actions = {
                 new CreateItem(output), new ShowAllItems(output), new EditItem(output),
                 new DeleteItem(output), new FindItemById(output), new FindItemsByName(output), new ExitProgram(output)
         };
+        String[] answers = {"9", "6"};
+        Input input = new ValidateRangeInput(output, new ValidateInput(output, new StubInput(answers)), actions);
+        Tracker tracker = new Tracker();
+
         new StartUI(output, actions).init(input, tracker);
         assertThat(output.toString(), is(
                 String.format(
@@ -148,7 +149,7 @@ public class StartUITest {
         Input in = new StubInput(
                 new String[] { "-1", "0"}
         );
-        ValidateInput input = new ValidateInput(output, in);
+        Input input = new ValidateRangeInput(output, new ValidateInput(output, in), actions);
         int selected = input.askInt("Enter menu:");
         assertThat(selected, is(0));
     }
