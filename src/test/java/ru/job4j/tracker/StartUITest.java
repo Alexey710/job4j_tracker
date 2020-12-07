@@ -100,8 +100,8 @@ public class StartUITest {
         new StartUI(output, actions).init(input, tracker);
         assertThat(output.toString(), is(
                 String.format(
-                        "Please enter number of menu from 0 to 6" + System.lineSeparator()
-                                + "===Exit Program===" + System.lineSeparator()
+                        "Please enter number of menu from 0 to 6%n"
+                                + "===Exit Program===%n"
                 )
         ));
     }
