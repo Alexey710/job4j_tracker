@@ -1,6 +1,7 @@
 package ru.job4j.tracker;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class TrackerSingle2 {
     private static Tracker instance;
@@ -23,11 +24,11 @@ public class TrackerSingle2 {
         return instance.findById(id);
     }
 
-    public Item[] findByName(String key) {
+    public List<Item> findByName(String key) {
         return instance.findByName(key);
     }
 
-    public Item[] findAll() {
+    public List<Item> findAll() {
         return instance.findAll();
     }
 
@@ -46,8 +47,6 @@ public class TrackerSingle2 {
         Item item2 = new Item("Entry200");
         instance1.add(item1);
         instance2.add(item2);
-        System.out.println(Arrays.toString(instance1.findAll()));
-        System.out.println(Arrays.toString(instance2.findAll()));
         System.out.println(instance1 == instance2);
     }
 }

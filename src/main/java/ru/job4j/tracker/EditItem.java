@@ -14,14 +14,23 @@ public class EditItem implements UserAction {
 
     @Override
     public boolean execute(Input input, Tracker tracker) {
-        int id = input.askInt("Select \"id\":");
+        boolean invalid = true;
+        int id = -1;
+        while (invalid) {
+            id = input.askInt("Select \"id\":");
+            if (tracker.findById(id) == null) {
+                out.println("Item is not replaced.");
+            } else {
+                invalid = false;
+            }
+        }
         String name = input.askStr("Select \"name\" of а new Item:");
         Item item = new Item(name);
         boolean validation = tracker.replace(id, item);
         if (validation) {
-            System.out.println("Item is replaced.");
+                   out.println("Item is replaced.");
         } else {
-            System.out.println("Item is not replaced.");
+                   out.println("Item is not replaced.");
         }
         return true;
     }

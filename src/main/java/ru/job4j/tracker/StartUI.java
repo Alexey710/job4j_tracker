@@ -1,16 +1,19 @@
 package ru.job4j.tracker;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class StartUI {
-    private final UserAction[] actions;
+    private final List<UserAction> actions;
     private final Output out;
     
-    public StartUI(Output out, UserAction[] actions) {
+    public StartUI(Output out, List<UserAction> actions) {
         this.out = out;
         this.actions = actions;
 
     }
 
-    public UserAction[] getActions() {
+    public List<UserAction> getActions() {
         return actions;
     }
 
@@ -19,24 +22,27 @@ public class StartUI {
         while (run) {
             this.showMenu(this.actions);
             int select = input.askInt("Select: ");
-            UserAction action = this.actions[select];
+            UserAction action = this.actions.get(select);
             run = action.execute(input, tracker);
         }
     }
 
-    private void showMenu(UserAction[] actions) {
+    private void showMenu(List<UserAction> actions) {
         System.out.println("Menu.");
-        for (int index = 0; index < actions.length; index++) {
-            System.out.println(index + ". " + actions[index].name());
+        for (UserAction elem : actions) {
+            System.out.println(actions.indexOf(elem) + ". " + elem.name());
         }
     }
 
     public static void main(String[] args) {
         Output output = new ConsoleOutput();
-        UserAction[] actions = {
-                new CreateItem(output), new ShowAllItems(output), new EditItem(output),
-                new DeleteItem(output), new FindItemById(output), new FindItemsByName(output), new ExitProgram(output)
-        };
+        List<UserAction> actions = new ArrayList<>();
+        actions = List.of(
+                new CreateItem(output), new ShowAllItems(output), new FindItemById(output),
+                new EditItem(output), new DeleteItem(output), new FindItemsByName(output),
+                new ExitProgram(output)
+        );
+
         Input input = new ValidateRangeInput(output, new ValidateInput(output, new ConsoleInput()), actions);
         Tracker tracker = new Tracker();
         new StartUI(output, actions).init(input, tracker);

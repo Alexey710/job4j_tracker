@@ -1,8 +1,7 @@
 package ru.job4j.tracker;
 
 import org.junit.Test;
-
-import static org.hamcrest.CoreMatchers.nullValue;
+import java.util.List;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -23,8 +22,8 @@ public class TrackerTest {
         Item item = new Item();
         item.setName("test1");
         tracker.add(item);
-        Item[] in = {item};
-        Item[] result = tracker.findByName("test1");
+        List<Item> in = List.of(item);
+        List<Item> result = tracker.findByName("test1");
         assertThat(result, is(in));
     }
 
@@ -34,8 +33,8 @@ public class TrackerTest {
         Item item = new Item();
         item.setName("test1");
         tracker.add(item);
-        Item[] in = {item};
-        Item[] result = tracker.findAll();
+        List<Item> in = List.of(item);
+        List<Item> result = tracker.findAll();
         assertThat(result, is(in));
     }
 
@@ -59,7 +58,17 @@ public class TrackerTest {
         bug.setName("Bug");
         tracker.add(bug);
         int id = bug.getId();
-        tracker.delete(id);
-        assertThat(tracker.findById(id), is(nullValue()));
+        boolean deleted = tracker.delete(id);
+        assertThat(deleted, is(true));
+    }
+
+    @Test
+    public void whenFindById() {
+        Tracker tracker = new Tracker();
+        Item bug = new Item();
+        bug.setName("Bug");
+        tracker.add(bug);
+        int id = bug.getId();
+        assertThat(tracker.findById(id).getName(), is("Bug"));
     }
 }

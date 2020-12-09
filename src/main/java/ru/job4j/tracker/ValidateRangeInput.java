@@ -1,11 +1,13 @@
 package ru.job4j.tracker;
 
+import java.util.List;
+
 public class ValidateRangeInput implements Input {
     private final Output out;
     private final ValidateInput in;
-    private UserAction[] actions;
+    private List<UserAction> actions;
 
-    public ValidateRangeInput(Output out, ValidateInput in, UserAction[] actions) {
+    public ValidateRangeInput(Output out, ValidateInput in, List<UserAction> actions) {
         this.out = out;
         this.in = in;
         this.actions = actions;
@@ -23,15 +25,14 @@ public class ValidateRangeInput implements Input {
         do {
             try {
                 value = in.askInt(question);
-                if (value < 0 || value >= actions.length) {
+                if (value < 0 || value >= actions.size()) {
                     throw new ArrayIndexOutOfBoundsException();
                 }
                 invalid = false;
             } catch (ArrayIndexOutOfBoundsException be) {
-                out.println("Please enter number of menu from 0 to " + (actions.length - 1));
+                out.println("Please enter number of menu from 0 to " + (actions.size() - 1));
             }
         } while (invalid);
         return value;
     }
-
 }
