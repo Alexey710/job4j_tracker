@@ -42,8 +42,8 @@ public class StartUI {
                 new EditItem(output), new DeleteItem(output), new FindItemsByName(output),
                 new ExitProgram(output)
         );
-
-        Input input = new ValidateRangeInput(output, new ValidateInput(output, new ConsoleInput()), actions);
+        ValidateInput validateInput = new ValidateInput(output, new ConsoleInput());
+        Input input = new ValidateRangeInput(output, validateInput, actions);
         Tracker tracker = new Tracker();
         new StartUI(output, actions).init(input, tracker);
     }

@@ -77,7 +77,7 @@ public class StartUITest {
         );
         new StartUI(output, actions).init(in, tracker);
         assertThat(output.toString(), is("Item{id=2, name='Item2}" + System.lineSeparator()
-                + "===Exit Program===" + System.lineSeparator() ));
+                + "===Exit Program===" + System.lineSeparator()));
     }
 
     @Test
@@ -95,7 +95,7 @@ public class StartUITest {
         );
         new StartUI(output, actions).init(in, tracker);
         assertThat(output.toString(), is("Item is deleted." + System.lineSeparator()
-                + "===Exit Program===" + System.lineSeparator() ));
+                + "===Exit Program===" + System.lineSeparator()));
     }
 
     @Test
@@ -112,7 +112,7 @@ public class StartUITest {
         );
         new StartUI(output, actions).init(in, tracker);
         assertThat(output.toString(), is("Item is replaced." + System.lineSeparator()
-                + "===Exit Program===" + System.lineSeparator() ));
+                + "===Exit Program===" + System.lineSeparator()));
     }
 
     @Test
@@ -127,7 +127,8 @@ public class StartUITest {
         actions.add(new FindItemsByName(output));
         actions.add(new ExitProgram(output));
         String[] answers = {"9", "6"};
-        Input input = new ValidateRangeInput(output, new ValidateInput(output, new StubInput(answers)), actions);
+        ValidateInput validateInput = new ValidateInput(output, new StubInput(answers));
+        Input input = new ValidateRangeInput(output, validateInput, actions);
         Tracker tracker = new Tracker();
 
         new StartUI(output, actions).init(input, tracker);
@@ -152,7 +153,7 @@ public class StartUITest {
         actions.add(new ExitProgram(output));
         StartUI startUI = new StartUI(output, actions);
         Input in = new StubInput(
-                new String[] { "1"}
+                new String[] {"1"}
         );
         ValidateInput valid = new ValidateInput(output, in);
         int selected = valid.askInt("Enter menu:");
@@ -172,7 +173,7 @@ public class StartUITest {
         actions.add(new ExitProgram(output));
         StartUI startUI = new StartUI(output, actions);
         Input in = new StubInput(
-                new String[] { "0", "Entry1", "0", "Entry2", "0", "Entry3"}
+                new String[] {"0", "Entry1", "0", "Entry2", "0", "Entry3"}
         );
         ValidateInput input = new ValidateInput(output, in);
         int selected = input.askInt("Enter menu:");
@@ -192,7 +193,7 @@ public class StartUITest {
         actions.add(new ExitProgram(output));
         StartUI startUI = new StartUI(output, actions);
         Input in = new StubInput(
-                new String[] { "-1", "0"}
+                new String[] {"-1", "0"}
         );
         Input input = new ValidateRangeInput(output, new ValidateInput(output, in), actions);
         int selected = input.askInt("Enter menu:");
@@ -214,6 +215,6 @@ public class StartUITest {
         new StartUI(output, actions).init(in, tracker);
         assertThat(output.toString(), is("Item is not replaced." + System.lineSeparator()
                 + "Item is replaced." + System.lineSeparator()
-                + "===Exit Program===" + System.lineSeparator() ));
+                + "===Exit Program===" + System.lineSeparator()));
     }
 }
