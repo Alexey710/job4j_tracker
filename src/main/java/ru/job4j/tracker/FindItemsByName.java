@@ -18,13 +18,12 @@ public class FindItemsByName implements UserAction {
     public boolean execute(Input input, Tracker tracker) {
         String name = input.askStr("Select \"name\" of Item:");
         List<Item> all = tracker.findByName(name);
-        if (!all.isEmpty()) {
-            for (Item elem : all) {
-                out.println(elem);
-            }
-        } else {
+        if (all.size() == 0) {
             System.out.println("Name is not found.");
         }
+        for (Item elem : all) {
+                out.println(elem);
+            }
         return true;
     }
 }
