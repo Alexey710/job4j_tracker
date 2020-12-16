@@ -25,8 +25,9 @@ public class Departments {
     }
 
     public static void sortDesc(List<String> orgs) {
+        Comparator<String> then = new ComparatorDepartmentsAsc();
         Comparator<String> comb =
-                new ComparatorDepartmentsDesnFirstElem().thenComparing(new ComparatorDepartmentsAsc());
+                new ComparatorDepartmentsDesnFirstElem().thenComparing(then);
         Collections.sort(orgs, comb);
     }
 }
