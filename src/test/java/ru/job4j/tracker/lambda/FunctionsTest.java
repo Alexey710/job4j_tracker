@@ -11,7 +11,6 @@ import java.util.function.Function;
 
 import static org.hamcrest.core.Is.is;
 
-
 public class FunctionsTest {
     public static List<Double> diapason(int start, int end, Function<Double, Double> func) {
         List<Double> list = new ArrayList<>();
