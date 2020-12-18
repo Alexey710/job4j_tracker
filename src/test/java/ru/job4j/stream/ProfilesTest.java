@@ -11,7 +11,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 public class ProfilesTest {
-    List<Profile> profiles = new ArrayList<>();
+    private List<Profile> profiles = new ArrayList<>();
+
     @Before
     public void setUp() {
         profiles.add(new Profile(new Address("Tula", "Svetlay", 18, 477)));
