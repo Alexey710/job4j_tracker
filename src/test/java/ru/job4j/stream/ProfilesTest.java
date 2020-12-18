@@ -14,9 +14,12 @@ public class ProfilesTest {
     List<Profile> profiles = new ArrayList<>();
     @Before
     public void setUp() {
-        profiles.add(new Profile(new Address("Moscow", "Lenina", 1, 144)));
-        profiles.add(new Profile(new Address("Penza", "Pushkina", 8, 454)));
         profiles.add(new Profile(new Address("Tula", "Svetlay", 18, 477)));
+        profiles.add(new Profile(new Address("Tula", "Svetlay", 18, 477)));
+        profiles.add(new Profile(new Address("Tula", "Svetlay", 18, 477)));
+        profiles.add(new Profile(new Address("Penza", "Pushkina", 8, 454)));
+        profiles.add(new Profile(new Address("Moscow", "Lenina", 1, 144)));
+
     }
 
     @Test
