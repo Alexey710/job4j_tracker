@@ -18,7 +18,7 @@ public class Tracker {
         int rsl = -1;
         for (Item elem : items) {
             if (elem.getId() == id) {
-                rsl = items.indexOf(elem);
+                rsl = id - 1;
                 break;
             }
         }
@@ -28,7 +28,7 @@ public class Tracker {
     public Item findById(int id) {
         for (Item elem : items) {
             if (elem.getId() == id) {
-                  return items.get(items.indexOf(elem));
+                return items.get(id - 1);
             }
         }
         return null;
@@ -53,7 +53,7 @@ public class Tracker {
         int index = -1;
         for (Item elem : items) {
             if (elem.getId() == id) {
-                index = items.indexOf(elem);
+                  index = id - 1;
             }
         }
         Item replaced;
@@ -69,7 +69,7 @@ public class Tracker {
         Item replaced = null;
         for (Item elem : items) {
             if (elem.getId() == id) {
-                replaced = items.remove(items.indexOf(elem));
+                  replaced = items.remove(id - 1);
                 break;
             }
         }
