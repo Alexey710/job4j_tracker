@@ -16,6 +16,10 @@ public class Student {
         return score;
     }
 
+    public Student getStudent() {
+        return this;
+    }
+
     public String getSurname() {
         return surname;
     }

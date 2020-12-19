@@ -12,6 +12,8 @@ public class School {
     }
 
     public Map<String, Student> transform(List<Student> students) {
-        return students.stream().distinct().collect(Collectors.toMap(a -> a.getSurname(), a -> a));
+        return students.stream()
+                .collect(Collectors
+                        .toMap(Student :: getSurname, Student :: getStudent, (existing, replacement) -> existing));
     }
 }

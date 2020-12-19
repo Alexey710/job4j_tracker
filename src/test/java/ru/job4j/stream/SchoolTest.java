@@ -70,9 +70,9 @@ public class SchoolTest {
         Student stud1 = new Student(20, "Surname2");
         Student stud2 = new Student(70, "Surname2");
         Student stud3 = new Student(30, "Surname3");
-        students.add(new Student(20, "Surname2"));
-        students.add(new Student(20, "Surname2"));
-        students.add(new Student(30, "Surname3"));
+        students.add(stud1);
+        students.add(stud2);
+        students.add(stud3);
         School sc = new School();
         Map<String, Student> rsl = sc.transform(students);
         Map<String, Student> expected = new HashMap<>();
