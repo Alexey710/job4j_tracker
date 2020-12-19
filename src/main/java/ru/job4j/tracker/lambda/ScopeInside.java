@@ -4,8 +4,7 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public class ScopeInside {
-    public static void main(String[] args) {
-        Integer[] number = {1, 2, 3};
+    public static int sum(Integer[] number) {
             int total = add(number, (arr) -> {
                         int temp = 0;
                         for (int i = 0; i < arr.length; i++) {
@@ -13,8 +12,7 @@ public class ScopeInside {
                         }
                         return temp;
             });
-
-        System.out.println(total);
+            return total;
     }
 
     private static Integer add(Integer[] arr, Function<Integer[], Integer> calc) {
