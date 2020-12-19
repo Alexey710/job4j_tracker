@@ -46,7 +46,6 @@ public class DepartmentsTest {
                 "K2/SK1/SSK2"
         );
         List<String> result = Departments.fillGaps(input);
-        Departments.sortAsc(result);
         assertThat(result, is(expect));
     }
 
