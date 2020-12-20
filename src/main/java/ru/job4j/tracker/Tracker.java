@@ -6,32 +6,36 @@ import java.util.List;
 public class Tracker {
 
     private final List<Item> items = new ArrayList<>();
-    private int ids = 1;
 
     public Item add(Item item) {
-        item.setId(ids++);
+        for (int i = 1; i <= items.size() + 1; i++) {
+            if (indexOf(i) == -1) {
+                item.setId(i);
+                break;
+            }
+        }
+        if (items.size() == 0) {
+            item.setId(1);
+        }
+        /*item.setId(ids++);*/
         items.add(item);
         return item;
     }
 
     private int indexOf(int id) {
         int rsl = -1;
+        int index = -1;
         for (Item elem : items) {
+            index++;
             if (elem.getId() == id) {
-                rsl = id - 1;
-                break;
+                return index;
             }
         }
         return rsl;
     }
 
     public Item findById(int id) {
-        for (Item elem : items) {
-            if (elem.getId() == id) {
-                return items.get(id - 1);
-            }
-        }
-        return null;
+        return indexOf(id) == -1 ? null : items.get(indexOf(id));
     }
 
     public List<Item> findByName(String key) {
@@ -50,12 +54,7 @@ public class Tracker {
 
     public boolean replace(int id, Item item) {
         boolean rsl = false;
-        int index = -1;
-        for (Item elem : items) {
-            if (elem.getId() == id) {
-                  index = id - 1;
-            }
-        }
+        int index = indexOf(id);
         Item replaced;
         replaced = items.set(index, item);
         item.setId(id);
@@ -69,7 +68,7 @@ public class Tracker {
         Item replaced = null;
         for (Item elem : items) {
             if (elem.getId() == id) {
-                  replaced = items.remove(id - 1);
+                  replaced = items.remove(indexOf(id));
                 break;
             }
         }
