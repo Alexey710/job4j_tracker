@@ -17,22 +17,22 @@ public class BankService {
     }
 
     public User findByPassport(String passport) {
-        for (Map.Entry<User, List<Account>> elem : users.entrySet()) {
-            if (Objects.equals(elem.getKey().getPassport(), passport)) {
-                return elem.getKey();
-            }
-        }
-        return null;
+        return users
+                .keySet()
+                .stream()
+                .filter(o -> o.getPassport().equals(passport))
+                .findFirst()
+                .orElse(null);
     }
 
     public Account findByRequisite(String passport, String requisite) {
-        User target = this.findByPassport(passport);
-        if (target != null) {
-            for (Account account : users.get(target)) {
-                if (Objects.equals(account.getRequisite(), requisite)) {
-                    return account;
-                }
-            }
+        List<Account> account = users.get(findByPassport(passport));
+        if (account != null) {
+            return account
+                    .stream()
+                    .filter(o -> o.getRequisite().equals(requisite))
+                    .findFirst()
+                    .orElse(null);
         }
         return null;
     }
