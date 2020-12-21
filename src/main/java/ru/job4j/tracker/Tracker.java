@@ -6,18 +6,10 @@ import java.util.List;
 public class Tracker {
 
     private final List<Item> items = new ArrayList<>();
+    private int ids = 1;
 
     public Item add(Item item) {
-        for (int i = 1; i <= items.size() + 1; i++) {
-            if (indexOf(i) == -1) {
-                item.setId(i);
-                break;
-            }
-        }
-        if (items.size() == 0) {
-            item.setId(1);
-        }
-        /*item.setId(ids++);*/
+        item.setId(ids++);
         items.add(item);
         return item;
     }
