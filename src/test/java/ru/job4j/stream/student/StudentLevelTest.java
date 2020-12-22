@@ -56,5 +56,6 @@ public class StudentLevelTest {
         );
         List<Student> output = StudentLevel.levelOf(input, 20);
         assertThat(output, is(expected));
+
     }
 }
