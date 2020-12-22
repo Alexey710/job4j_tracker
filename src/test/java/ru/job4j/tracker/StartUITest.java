@@ -99,6 +99,24 @@ public class StartUITest {
     }
 
     @Test
+    public void whenInvalidDelete() {
+        String[] answers = {"0", "Item1", "4", "10", "6"};
+        Output output = new StubOutput();
+        Input in = new StubInput(answers);
+
+        Tracker tracker = new Tracker();
+        List<UserAction> actions = new ArrayList<>();
+        actions = List.of(
+                new CreateItem(output), new ShowAllItems(output), new FindItemById(output),
+                new EditItem(output), new DeleteItem(output), new FindItemsByName(output),
+                new ExitProgram(output)
+        );
+        new StartUI(output, actions).init(in, tracker);
+        assertThat(output.toString(), is("Item is not deleted." + System.lineSeparator()
+                + "===Exit Program===" + System.lineSeparator()));
+    }
+
+    @Test
     public void whenEditItem() {
         String[] answers = {"0", "Item1", "3", "1", "Item2", "6"};
         Output output = new StubOutput();

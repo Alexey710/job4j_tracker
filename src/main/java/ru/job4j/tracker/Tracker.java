@@ -27,7 +27,8 @@ public class Tracker {
     }
 
     public Item findById(int id) {
-        return indexOf(id) == -1 ? null : items.get(indexOf(id));
+        int index = indexOf(id);
+        return index == -1 ? null : items.get(index);
     }
 
     public List<Item> findByName(String key) {
@@ -48,22 +49,28 @@ public class Tracker {
         boolean rsl = false;
         int index = indexOf(id);
         Item replaced;
-        replaced = items.set(index, item);
-        item.setId(id);
-        if (replaced != null) {
-            rsl = true;
+        if (index != -1) {
+            replaced = items.set(index, item);
+            item.setId(id);
+            if (replaced != null) {
+                rsl = true;
+            }
         }
         return rsl;
     }
 
     public boolean delete(int id) {
         Item replaced = null;
-        for (Item elem : items) {
-            if (elem.getId() == id) {
-                  replaced = items.remove(indexOf(id));
-                break;
+        int index = indexOf(id);
+        if (index != -1) {
+            for (Item elem : items) {
+                if (elem.getId() == id) {
+                    replaced = items.remove(index);
+                    break;
+                }
             }
         }
+
         return replaced != null;
     }
 }
