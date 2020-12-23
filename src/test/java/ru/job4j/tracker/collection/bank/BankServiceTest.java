@@ -3,6 +3,9 @@ package ru.job4j.tracker.collection.bank;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.NoSuchElementException;
+import java.util.Optional;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 
@@ -13,8 +16,8 @@ public class BankServiceTest {
         User user = new User("3434", "Petr Arsentev");
         BankService bank = new BankService();
         bank.addUser(user);
-        User found = bank.findByPassport("3434");
-        assertThat(found, is(user));
+        Optional<User> found = bank.findByPassport("3434");
+        assertThat(found.get(), is(user));
     }
 
     @Test
@@ -24,18 +27,26 @@ public class BankServiceTest {
         BankService bank = new BankService();
         bank.addUser(user);
         bank.addUser(user2);
-        User found = bank.findByPassport("3434");
-        assertThat(found.getUsername(), is("User 1"));
+        Optional<User> found = bank.findByPassport("3434");
+        assertThat(found.get().getUsername(), is("User 1"));
     }
 
-    @Test
+    @Test(expected = NoSuchElementException.class)
     public void whenEnterInvalidPassport() {
         User user = new User("3434", "Petr Arsentev");
         BankService bank = new BankService();
         bank.addUser(user);
         bank.addAccount(user.getPassport(), new Account("5546", 150D));
-        Account target = bank.findByRequisite("34", "5546");
-        assertNull(target);
+        Optional<Account> target = bank.findByRequisite("34", "5546");
+        target.get();
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void whenEnterInvalidPassportNUll() {
+        BankService bank = new BankService();
+        bank.addUser(new User("321", "Petr Arsentev"));
+        Optional<User> user = bank.findByPassport("3211");
+        user.get();
     }
 
     @Test
@@ -44,9 +55,9 @@ public class BankServiceTest {
         BankService bank = new BankService();
         bank.addUser(user);
         bank.addAccount(user.getPassport(), new Account("5546", 150D));
-        Account output = bank.findByRequisite("3434", "5546");
+        Optional<Account> output = bank.findByRequisite("3434", "5546");
         Account expected = new Account("5546", 150D);
-        Assert.assertThat(output, is(expected));
+        Assert.assertThat(output.get(), is(expected));
     }
 
     @Test
@@ -55,7 +66,7 @@ public class BankServiceTest {
         BankService bank = new BankService();
         bank.addUser(user);
         bank.addAccount(user.getPassport(), new Account("5546", 150D));
-        assertThat(bank.findByRequisite("3434", "5546").getBalance(), is(150D));
+        assertThat(bank.findByRequisite("3434", "5546").get().getBalance(), is(150D));
     }
 
     @Test
@@ -66,7 +77,7 @@ public class BankServiceTest {
         bank.addAccount(user.getPassport(), new Account("5546", 150D));
         bank.addAccount(user.getPassport(), new Account("113", 50D));
         bank.transferMoney(user.getPassport(), "5546", user.getPassport(), "113", 150D);
-        assertThat(bank.findByRequisite(user.getPassport(), "113").getBalance(), is(200D));
+        assertThat(bank.findByRequisite(user.getPassport(), "113").get().getBalance(), is(200D));
     }
 
     @Test
@@ -78,6 +89,6 @@ public class BankServiceTest {
         bank.addAccount(user.getPassport(), new Account("113", 50D));
         boolean rsl = bank.transferMoney(user.getPassport(), "5546",
                 user.getPassport(), "113", 150D);
-        assertThat(bank.findByRequisite(user.getPassport(), "113").getBalance(), is(50D));
+        assertThat(bank.findByRequisite(user.getPassport(), "113").get().getBalance(), is(50D));
     }
 }
