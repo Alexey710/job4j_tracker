@@ -38,7 +38,8 @@ public class FreezeStr {
         }
 
         for (Map.Entry<String, Integer> entry : leftMap.entrySet()) {
-            if (!rightMap.containsKey(entry.getKey()) || rightMap.get(entry.getKey()) != leftMap.get(entry.getKey())) {
+            if (!rightMap.containsKey(entry.getKey())
+                    || rightMap.get(entry.getKey()) != leftMap.get(entry.getKey())) {
                 return false;
             }
         }

@@ -16,7 +16,7 @@ public class BankService {
 
     /**
      * метод добавляет пользователя
-     * @param user
+     * @param user пользователь {@link User}
      */
     public void addUser(User user) {
         List<Account> list = new ArrayList<>();
@@ -81,7 +81,8 @@ public class BankService {
     }
 
     /**
-     * метод перемщает деньги с одного аккаунта пользователя {@link Account} на другой аккаунт {@link Account}
+     * метод перемщает деньги с одного аккаунта пользователя {@link Account}
+     * на другой аккаунт {@link Account}
      * по реквизитам счте и паспорту пользователя
      * @param srcPassport с номера паспорта из класса {@link User}
      * @param srcRequisite с ревизитов счета из класса {@link Account}

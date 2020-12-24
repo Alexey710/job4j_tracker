@@ -5,7 +5,6 @@ import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 
-
 public class ScopeInsideTest {
 
     @Test
