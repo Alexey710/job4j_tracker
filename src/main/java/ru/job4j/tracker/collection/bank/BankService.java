@@ -3,7 +3,7 @@ package ru.job4j.tracker.collection.bank;
 import java.util.*;
 
 public class BankService {
-    private Map<User, List<Account>> users = new HashMap<>();
+    private final Map<User, List<Account>> users = new HashMap<>();
 
     public void addUser(User user) {
         List<Account> list = new ArrayList<>();
@@ -11,8 +11,8 @@ public class BankService {
     }
 
     public void addAccount(String passport, Account account) {
-        Optional<User> target = this.findByPassport(passport);
-        users.get(target.get()).add(account);
+        Optional<User> target = findByPassport(passport);
+        target.ifPresent(user -> users.get(user).add(account));
     }
 
     public Optional<User> findByPassport(String passport) {
@@ -27,9 +27,10 @@ public class BankService {
     }
 
     public Optional<Account> findByRequisite(String passport, String requisite) {
-        Optional<List<Account>> account = Optional.of(users.get(findByPassport(passport).get()));
-        if (account.isPresent()) {
-            for (Account elem : account.get()) {
+        Optional<User> user = findByPassport(passport);
+        if (user.isPresent()) {
+            List<Account> account = users.get(user.get());
+            for (Account elem : account) {
                 if (elem.getRequisite().equals(requisite)) {
                     return Optional.of(elem);
                 }
@@ -43,10 +44,12 @@ public class BankService {
         boolean rsl = false;
         Optional<Account> src = findByRequisite(srcPassport, srcRequisite);
         Optional<Account> dest = findByRequisite(destPassport, destRequisite);
-        if (src.get().getBalance() >= amount) {
-            src.get().setBalance(src.get().getBalance() - amount);
-            dest.get().setBalance(dest.get().getBalance() + amount);
-            rsl = true;
+        if (src.isPresent() && dest.isPresent()) {
+            if (src.get().getBalance() >= amount) {
+                src.get().setBalance(src.get().getBalance() - amount);
+                dest.get().setBalance(dest.get().getBalance() + amount);
+                rsl = true;
+            }
         }
         return rsl;
     }
