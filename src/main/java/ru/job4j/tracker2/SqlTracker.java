@@ -10,6 +10,13 @@ public class SqlTracker implements Store {
     private Connection connection;
     private ConsoleInput input;
 
+    public SqlTracker() {
+    }
+
+    public SqlTracker(Connection connection) {
+        this.connection = connection;
+    }
+
     public void init() {
         try (InputStream in = SqlTracker.class.getClassLoader()
                 .getResourceAsStream("app.properties")) {

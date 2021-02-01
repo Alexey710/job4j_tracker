@@ -1,0 +1,1 @@
+ALTER TABLE items ADD COLUMN surname varchar(2000);
