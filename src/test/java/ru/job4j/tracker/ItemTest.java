@@ -2,7 +2,7 @@ package ru.job4j.tracker;
 
 import org.junit.Assert;
 import org.junit.Test;
-import ru.job4j.tracker.collection.ComparatorItemReverseOrder;
+import ru.job4j.collection.ComparatorItemReverseOrder;
 
 import java.util.ArrayList;
 import java.util.Collections;
