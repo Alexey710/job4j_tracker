@@ -33,6 +33,13 @@ public class SqlTracker implements Store {
         }
     }
 
+    void createTableForTest() throws SQLException {
+        String sql = "create table items(id serial primary key, name varchar(255))";
+            try (Statement statement = connection.createStatement()) {
+                statement.execute(sql);
+            }
+    }
+
     @Override
     public void close() throws Exception {
         if (connection != null) {
