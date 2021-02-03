@@ -1,1 +1,1 @@
-ALTER TABLE items DROP COLUMN surname;
+insert into items(name) values ('item5');

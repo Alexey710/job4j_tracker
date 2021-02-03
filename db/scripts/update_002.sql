@@ -1,1 +1,1 @@
-ALTER TABLE items ADD COLUMN surname varchar(2000);
+insert into items(name) values ('item4');

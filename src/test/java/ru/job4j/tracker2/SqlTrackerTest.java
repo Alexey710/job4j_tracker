@@ -1,7 +1,6 @@
 package ru.job4j.tracker2;
 
 import org.junit.Test;
-
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,7 +12,7 @@ import static org.junit.Assert.*;
 public class SqlTrackerTest {
     public Connection init() {
         try (InputStream in = SqlTracker.class.getClassLoader()
-                .getResourceAsStream("test.properties")) {
+                .getResourceAsStream("app.properties")) {
             Properties config = new Properties();
             config.load(in);
             Class.forName(config.getProperty("driver-class-name"));
@@ -31,41 +30,35 @@ public class SqlTrackerTest {
     @Test
     public void createItem() throws SQLException, Exception {
         try (SqlTracker tracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
-            tracker.createTableForTest();
-            tracker.add(new Item("item1"));
-            assertThat(tracker.findByName("item1").size(), is(1));
+            tracker.add(new Item("itemNew"));
+            assertThat(tracker.findByName("itemNew").size(), is(1));
         }
     }
 
     @Test
     public void replaceItemAndFindByName() throws SQLException, Exception {
         try (SqlTracker tracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
-            tracker.createTableForTest();
-            tracker.add(new Item("item1"));
-            tracker.replace("1", new Item("item2"));
-            assertThat(tracker.findByName("item2").size(), is(1));
+            String id = String.valueOf(tracker.findAll().get(1).getId());
+            tracker.replace(id, new Item("itemNew"));
+            assertThat(tracker.findByName("itemNew").size(), is(1));
         }
     }
 
     @Test
     public void deleteItemAndFindById() throws SQLException, Exception {
         try (SqlTracker tracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
-            tracker.createTableForTest();
-            tracker.add(new Item("item1"));
-            assertThat(tracker.findById("1"), is(new Item(1, "item1")));
-            tracker.delete("1");
-            assertNull(tracker.findById("1"));
+            String id = String.valueOf(tracker.findAll().get(1).getId());
+            tracker.delete(id);
+            assertNull(tracker.findById(id));
         }
     }
 
     @Test
     public void findAll() throws SQLException, Exception {
         try (SqlTracker tracker = new SqlTracker(ConnectionRollback.create(this.init()))) {
-            tracker.createTableForTest();
-            tracker.add(new Item("item1"));
-            tracker.add(new Item("item2"));
+            tracker.add(new Item("itemNew"));
             int size = tracker.findAll().size();
-            assertEquals(size, 2);
+            assertTrue(size > 0);
         }
     }
 
