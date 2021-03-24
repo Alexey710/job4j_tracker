@@ -1,10 +1,18 @@
 package ru.job4j.tracker2;
 
 import java.util.Objects;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "items")
 public class Item implements Comparable<Item> {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+
+    public Item() {
+    }
 
     public Item(String name) {
         this.name = name;
