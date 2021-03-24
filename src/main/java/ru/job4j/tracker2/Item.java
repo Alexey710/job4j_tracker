@@ -1,5 +1,6 @@
 package ru.job4j.tracker2;
 
+import java.sql.Timestamp;
 import java.util.Objects;
 import javax.persistence.*;
 
@@ -10,6 +11,8 @@ public class Item implements Comparable<Item> {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
+    private String description;
+    private Timestamp created;
 
     public Item() {
     }
@@ -39,6 +42,22 @@ public class Item implements Comparable<Item> {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Timestamp getCreated() {
+        return created;
+    }
+
+    public void setCreated(Timestamp created) {
+        this.created = created;
+    }
+
     @Override
     public int compareTo(Item o) {
         return this.getId() - o.getId();
@@ -46,7 +65,12 @@ public class Item implements Comparable<Item> {
 
     @Override
     public String toString() {
-        return "Item{" + "id=" + id + ", name='" + name + '}';
+        return "Item{"
+                + "id=" + id
+                + ", name='" + name + '\''
+                + ", description='" + description + '\''
+                + ", created=" + created
+                + '}';
     }
 
     @Override
