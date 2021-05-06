@@ -14,7 +14,8 @@ public class StartUI {
         this.out = out;
         this.actions = List.of(
                 new CreateItem(out), new EditItem(out), new DeleteItem(out),
-                new ShowAllItems(out), new FindItemsByName(out), new FindItemById(out),
+                new ShowAllItems(out), new ShowAllItemsReact(out),
+                new FindItemsByName(out), new FindItemById(out),
                 new ExitProgram(out)
         );
         try {
@@ -44,7 +45,7 @@ public class StartUI {
     }
 
     private static void addOneBillionItems() {
-        String[] answers = new String[2_000_100_001];
+        String[] answers = new String[1_000_001];
         for (int i = 0; i < answers.length; i++) {
             if (i % 2 == 0) {
                 answers[i] = "0";
